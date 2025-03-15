@@ -72,15 +72,6 @@ public class FetchData : MonoBehaviour
 		StartCoroutine(GetDataByName(json, username));
 	}
 
-	public void GetPlayer()
-	{
-		playerData.transform.GetChild(0).GetComponent<TMP_Text>().text = player.screenName;
-		playerData.transform.GetChild(1).GetComponent<TMP_Text>().text = player.firstName;
-		playerData.transform.GetChild(2).GetComponent<TMP_Text>().text = player.lastName;
-		playerData.transform.GetChild(3).GetComponent<TMP_Text>().text = player.dateStartPlaying;
-		playerData.transform.GetChild(4).GetComponent<TMP_Text>().text = player.score.ToString();
-	}
-
 	string ExtractPlayerId(string jsonResponse)
 	{
 		int index = jsonResponse.IndexOf("\"playerid\":\"") + 12;

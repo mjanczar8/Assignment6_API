@@ -6,7 +6,6 @@ using UnityEngine.Networking;
 using TMPro;
 using UnityEngine.UI;
 using System.Linq;
-using static FetchData;
 
 public class EditNDelete : MonoBehaviour
 {
