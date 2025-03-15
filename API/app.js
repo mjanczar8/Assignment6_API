@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 app.use(express.urlencoded({extended:true}));
 app.use(express.static(path.join(__dirname, "public")))
 
-const mongoURI = "mongodb://localhost:27017/Monogame";
+const mongoURI = "mongodb://localhost:27017/Unity";
 mongoose.connect(mongoURI);
 
 const db = mongoose.connection;
@@ -37,16 +37,11 @@ app.get("/player", async (req, res)=>{
 
 app.get("/player/:screenName", async (req, res) => {
     try {
-        console.log("Searching for player:", req.params.screenName); // Debug Log
-
         const player = await Player.findOne({ screenName: req.params.screenName });
 
         if (!player) {
-            console.log("Player not found in database."); // Debug Log
             return res.status(404).json({ error: "Player not found" });
         }
-
-        console.log("Player found:", player); // Debug Log
         res.json(player);
         
     } catch (error) {
@@ -96,7 +91,6 @@ app.post("/sentdatatodb", async (req,res)=>{
             score:newPlayerData.score
 
         });
-        //save to database
         await newPlayer.save();
         res.json({message:"Player Added Successfully",playerid:newPlayer.playerid, name:newPlayer.screenNameName});
     }
@@ -107,7 +101,6 @@ app.post("/sentdatatodb", async (req,res)=>{
     
 });
 
-//Update Player
 app.put("/update/:screenName", async (req, res) => {
     try {
         const { screenName } = req.params;
@@ -118,7 +111,7 @@ app.put("/update/:screenName", async (req, res) => {
         const updatedPlayer = await Player.findOneAndUpdate(
             { screenName },
             { $set: updatedData },
-            { new: true } // Returns updated document
+            { new: true }
         );
 
         if (!updatedPlayer) {
@@ -133,8 +126,6 @@ app.put("/update/:screenName", async (req, res) => {
         res.status(500).json({ error: "Failed to update player" });
     }
 });
-
-
 
 app.listen(3000, ()=>{
     console.log("Running on port 3000");
